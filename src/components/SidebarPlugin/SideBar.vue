@@ -94,4 +94,10 @@ export default {
     display: none;
   }
 }
+
+@media screen and (min-width: 1px) {
+  .nav-mobile-menu {
+    display: none;
+  }
+}
 </style>
