@@ -62,7 +62,7 @@
         >
           <template slot="content">
             <h4 class="title">Completed Tasks</h4>
-            <p class="category">Updated 1 hour ago </p>
+            <p class="category">Updated 1 hour ago</p>
           </template>
 
           <template slot="footer">
@@ -76,7 +76,6 @@
       <div
         class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-25"
       >
-        
         <stats-card data-background-color="orange">
           <template slot="header">
             <md-icon>content_copy</md-icon>
@@ -84,9 +83,7 @@
 
           <template slot="content">
             <p class="category">Clients</p>
-            <h3 class="title">
-              245/500
-            </h3>
+            <h3 class="title">245/500</h3>
           </template>
 
           <template slot="footer">
@@ -110,9 +107,7 @@
           </template>
 
           <template slot="footer">
-            <div class="stats">
-              Tracked from Twilio
-            </div>
+            <div class="stats">Tracked from Twilio</div>
           </template>
         </stats-card>
       </div>
@@ -161,11 +156,19 @@
                 <nav-tabs-table></nav-tabs-table>
               </md-tab>
 
-              <md-tab id="tab-pages" md-label="Completed" md-icon="done_outline">
+              <md-tab
+                id="tab-pages"
+                md-label="Completed"
+                md-icon="done_outline"
+              >
                 <nav-tabs-table></nav-tabs-table>
               </md-tab>
 
-              <md-tab id="tab-posts" md-label="Create Task" md-icon="person_add">
+              <md-tab
+                id="tab-posts"
+                md-label="Create Task"
+                md-icon="person_add"
+              >
                 <create-task-table></create-task-table>
               </md-tab>
             </md-tabs>

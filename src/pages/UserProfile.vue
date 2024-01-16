@@ -13,14 +13,12 @@
             <p class="category">Just Updated</p>
           </md-card-header>
           <md-card-content>
-            <ordered-table table-header-color="green"></ordered-table>
+            <ordered-table :table-header-color="tableHeaderColor"></ordered-table>
           </md-card-content>
         </md-card>
       </div>
     </div>
   </div>
-  
-  
 </template>
 
 <script>
@@ -31,7 +29,6 @@ export default {
   components: {
     EditProfileForm,
     OrderedTable,
-    
   },
 };
 </script>

@@ -1,11 +1,11 @@
-
-
 <template>
   <form @submit.prevent="submitForm">
     <md-card>
       <md-card-header :data-background-color="dataBackgroundColor">
         <h4 class="title">Hook Client</h4>
-        <p class="category">Fill In Your Client Information To Start Drip Campaign</p>
+        <p class="category">
+          Fill In Your Client Information To Start Drip Campaign
+        </p>
       </md-card-header>
 
       <md-card-content>
@@ -89,7 +89,9 @@
             </md-field>
           </div>
           <div class="md-layout-item md-size-100 text-right">
-            <md-button type="submit" class="md-raised md-success">Set The Hook</md-button>
+            <md-button type="submit" class="md-raised md-success"
+              >Set The Hook</md-button
+            >
           </div>
         </div>
       </md-card-content>
@@ -136,8 +138,8 @@ export default {
         country: this.country,
         code: this.code,
         dob: this.dob,
-        product:this.product,
-        premium:this.premium,
+        product: this.product,
+        premium: this.premium,
         notes: this.notes,
         // ... include other form data as needed ...
       });

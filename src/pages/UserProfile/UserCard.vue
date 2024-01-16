@@ -8,7 +8,8 @@
       <h6 class="category text-gray">CEO / Co-Founder</h6>
       <h4 class="card-title">Cody Barnes</h4>
       <p class="card-description">
-        I ain’t the toughest hickory that your axe has ever fell, but I’m a hickory just as well, I’m a hickory all the same.
+        I ain’t the toughest hickory that your axe has ever fell, but I’m a
+        hickory just as well, I’m a hickory all the same.
       </p>
       <md-button class="md-round md-success">Edit</md-button>
     </md-card-content>

@@ -6,7 +6,9 @@
         <md-table-cell md-label="Policy">{{ item.policy }}</md-table-cell>
         <md-table-cell md-label="Premium">{{ item.premium }}</md-table-cell>
         <md-table-cell md-label="Messages Sent">{{ item.sent }}</md-table-cell>
-        <md-table-cell md-label="Date Hook Was Set">{{ item.hook }}</md-table-cell>
+        <md-table-cell md-label="Date Hook Was Set">{{
+          item.hook
+        }}</md-table-cell>
       </md-table-row>
     </md-table>
   </div>
