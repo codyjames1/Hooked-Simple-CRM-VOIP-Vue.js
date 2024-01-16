@@ -99,36 +99,18 @@
   </form>
 </template>
 <script>
+// Adjust the import path based on the location of your firebaseConfig.js file
+import { serverTimestamp } from "firebase/firestore";
+import { db, collection, addDoc,  } from "./firebaseConfig";
+
 export default {
-  name: "edit-profile-form",
-  props: {
-    dataBackgroundColor: {
-      type: String,
-      default: "",
-    },
-  },
-  data() {
-    return {
-      title: null,
-      phonenumber: null,
-      emailadress: null,
-      lastname: null,
-      firstname: null,
-      address: null,
-      city: null,
-      country: null,
-      code: null,
-      dob: null,
-      product: null,
-      premium: null,
-      notes: null,
-    };
-  },
+  // ... your existing component options ...
+
   methods: {
     submitForm() {
       // Log the form data to the console (replace with your desired logic)
       console.log("Form Data:", {
-        title: this.username,
+        title: this.title,
         phonenumber: this.phonenumber,
         emailadress: this.emailadress,
         lastname: this.lastname,
@@ -141,14 +123,19 @@ export default {
         product: this.product,
         premium: this.premium,
         notes: this.notes,
+        timestamp: serverTimestamp(),
         // ... include other form data as needed ...
       });
+
+      // Add the form data to the Firestore collection
+      this.addToFirestore();
 
       // Optionally, you can clear the form after submission
       this.clearForm();
 
       // You can add additional logic here, such as sending data to the server
     },
+
     clearForm() {
       // Clear the form data
       this.title = null;
@@ -166,8 +153,33 @@ export default {
       this.notes = null;
       // ... clear other form fields ...
     },
+
+    async addToFirestore() {
+  // Example: Add form data to the "Users" collection
+  const usersCollection = collection(db, "Users");
+  await addDoc(usersCollection, {
+    title: this.title,
+    phonenumber: this.phonenumber,
+    emailadress: this.emailadress,
+    lastname: this.lastname,
+    firstname: this.firstname,
+    address: this.address,
+    city: this.city,
+    country: this.country,
+    code: this.code,
+    dob: this.dob,
+    product: this.product,
+    premium: this.premium,
+    notes: this.notes,
+    timestamp: serverTimestamp(),
+        // ... include other form data as needed ...
+      });
+
+      console.log("Form data added to Firestore");
+    },
   },
 };
 </script>
+
 
 <style></style>
