@@ -13,13 +13,13 @@
           <div class="md-layout-item md-small-size-100 md-size-33">
             <md-field>
               <label>Title</label>
-              <md-input v-model="title" type="text"></md-input>
+              <md-input v-model="title" type="text" required></md-input>
             </md-field>
           </div>
           <div class="md-layout-item md-small-size-100 md-size-33">
             <md-field>
               <label>Phone Number</label>
-              <md-input v-model="phonenumber" type="number"></md-input>
+              <md-input v-model="phonenumber" type="number" required></md-input>
             </md-field>
           </div>
           <div class="md-layout-item md-small-size-100 md-size-33">
@@ -31,25 +31,25 @@
           <div class="md-layout-item md-small-size-100 md-size-50">
             <md-field>
               <label>First Name</label>
-              <md-input v-model="firstname" type="text"></md-input>
+              <md-input v-model="firstname" type="text" required></md-input>
             </md-field>
           </div>
           <div class="md-layout-item md-small-size-100 md-size-50">
             <md-field>
               <label>Last Name</label>
-              <md-input v-model="lastname" type="text"></md-input>
+              <md-input v-model="lastname" type="text" required></md-input>
             </md-field>
           </div>
           <div class="md-layout-item md-small-size-100 md-size-100">
             <md-field>
               <label>Adress</label>
-              <md-input v-model="address" type="text"></md-input>
+              <md-input v-model="address" type="text" required></md-input>
             </md-field>
           </div>
           <div class="md-layout-item md-small-size-100 md-size-33">
             <md-field>
               <label>City</label>
-              <md-input v-model="city" type="text"></md-input>
+              <md-input v-model="city" type="text" required></md-input>
             </md-field>
           </div>
           <div class="md-layout-item md-small-size-100 md-size-33">
@@ -61,25 +61,24 @@
           <div class="md-layout-item md-small-size-100 md-size-33">
             <md-field>
               <label>Postal Code</label>
-              <md-input v-model="code" type="number"></md-input>
+              <md-input v-model="code" type="number" required></md-input>
             </md-field>
           </div>
           <div class="md-layout-item md-small-size-100 md-size-33">
-            <md-field>
-              <label>Date of Birth</label>
-              <md-input v-model="dob" type="number"></md-input>
-            </md-field>
-          </div>
+            <md-datepicker v-model="dob" :key="dobKey" required>
+  <label>Select date</label>
+</md-datepicker>
+         </div>
           <div class="md-layout-item md-small-size-100 md-size-33">
             <md-field>
               <label>Product Sold</label>
-              <md-input v-model="product" type="text"></md-input>
+              <md-input v-model="product" type="text" required></md-input>
             </md-field>
           </div>
           <div class="md-layout-item md-small-size-100 md-size-33">
             <md-field>
               <label>Monthly Premium</label>
-              <md-input v-model="premium" type="number"></md-input>
+              <md-input v-model="premium" type="number" required></md-input>
             </md-field>
           </div>
           <div class="md-layout-item md-size-100">
@@ -104,9 +103,47 @@ import { serverTimestamp } from "firebase/firestore";
 import { db, collection, addDoc,  } from "./firebaseConfig";
 
 export default {
-  // ... your existing component options ...
+  data() {
+  return {
+    // ... other properties
+    dobKey: 0, // key for md-datepicker
+  };
+},
 
+  watch: {
+  dob(newDob) {
+    this.formatDOB(newDob);
+  },
+},
   methods: {
+    formatDOB(newDob) {
+    // Ensure the input value is not empty
+    if (newDob) {
+      // Remove non-numeric characters
+      const numericValue = newDob.replace(/\D/g, '');
+
+      // Check if the value is a valid date (8 digits)
+      if (/^\d{0,8}$/.test(numericValue)) {
+        // Format the date as MM/DD/YYYY
+        const formattedDate = numericValue.replace(
+          /^(\d{0,2})(\d{0,2})(\d{0,4})$/,
+          (match, p1, p2, p3) => {
+            let result = '';
+
+            if (p1) result += p1.padStart(2, '0');
+            if (p2) result += `/${p2.padStart(2, '0')}`;
+            if (p3) result += `/${p3.padStart(4, '0')}`;
+
+            return result;
+          }
+        );
+
+        // Update the v-model with the formatted date
+        this.dob = formattedDate;
+      }
+    }
+  },
+    
     submitForm() {
       // Log the form data to the console (replace with your desired logic)
       console.log("Form Data:", {
@@ -136,24 +173,7 @@ export default {
       // You can add additional logic here, such as sending data to the server
     },
 
-    clearForm() {
-      // Clear the form data
-      this.title = null;
-      this.phonenumber = null;
-      this.emailadress = null;
-      this.lastname = null;
-      this.firstname = null;
-      this.address = null;
-      this.city = null;
-      this.country = null;
-      this.code = null;
-      this.dob = null;
-      this.product = null;
-      this.premium = null;
-      this.notes = null;
-      // ... clear other form fields ...
-    },
-
+    
     async addToFirestore() {
   // Example: Add form data to the "Users" collection
   const usersCollection = collection(db, "Users");
@@ -177,6 +197,27 @@ export default {
 
       console.log("Form data added to Firestore");
     },
+
+    clearForm() {
+  // Increment the key to force a re-render of the form components
+  this.dobKey += 1;
+
+  // Reset other form data
+  this.title = '';
+  this.phonenumber = '';
+  this.emailadress = '';
+  this.lastname = '';
+  this.firstname = '';
+  this.address = '';
+  this.city = '';
+  this.country = '';
+  this.code = '';
+  this.dob = '';
+  this.product = '';
+  this.premium = '';
+  this.notes = '';
+},
+
   },
 };
 </script>
