@@ -1,5 +1,7 @@
+
+
 <template>
-  <form>
+  <form @submit.prevent="submitForm">
     <md-card>
       <md-card-header :data-background-color="dataBackgroundColor">
         <h4 class="title">Hook Client</h4>
@@ -11,7 +13,7 @@
           <div class="md-layout-item md-small-size-100 md-size-33">
             <md-field>
               <label>Title</label>
-              <md-input></md-input>
+              <md-input v-model="title" type="text"></md-input>
             </md-field>
           </div>
           <div class="md-layout-item md-small-size-100 md-size-33">
@@ -87,7 +89,7 @@
             </md-field>
           </div>
           <div class="md-layout-item md-size-100 text-right">
-            <md-button class="md-raised md-success">Set The Hook</md-button>
+            <md-button type="submit" class="md-raised md-success">Set The Hook</md-button>
           </div>
         </div>
       </md-card-content>
@@ -105,8 +107,8 @@ export default {
   },
   data() {
     return {
-      username: null,
-      disabled: null,
+      title: null,
+      phonenumber: null,
       emailadress: null,
       lastname: null,
       firstname: null,
@@ -114,10 +116,56 @@ export default {
       city: null,
       country: null,
       code: null,
-      aboutme:
-        "Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.",
+      dob: null,
+      product: null,
+      premium: null,
+      notes: null,
     };
+  },
+  methods: {
+    submitForm() {
+      // Log the form data to the console (replace with your desired logic)
+      console.log("Form Data:", {
+        title: this.username,
+        phonenumber: this.phonenumber,
+        emailadress: this.emailadress,
+        lastname: this.lastname,
+        firstname: this.firstname,
+        address: this.address,
+        city: this.city,
+        country: this.country,
+        code: this.code,
+        dob: this.dob,
+        product:this.product,
+        premium:this.premium,
+        notes: this.notes,
+        // ... include other form data as needed ...
+      });
+
+      // Optionally, you can clear the form after submission
+      this.clearForm();
+
+      // You can add additional logic here, such as sending data to the server
+    },
+    clearForm() {
+      // Clear the form data
+      this.title = null;
+      this.phonenumber = null;
+      this.emailadress = null;
+      this.lastname = null;
+      this.firstname = null;
+      this.address = null;
+      this.city = null;
+      this.country = null;
+      this.code = null;
+      this.dob = null;
+      this.product = null;
+      this.premium = null;
+      this.notes = null;
+      // ... clear other form fields ...
+    },
   },
 };
 </script>
+
 <style></style>
