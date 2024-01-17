@@ -145,25 +145,6 @@ export default {
   },
     
     submitForm() {
-      // Log the form data to the console (replace with your desired logic)
-      console.log("Form Data:", {
-        title: this.title,
-        phonenumber: this.phonenumber,
-        emailadress: this.emailadress,
-        lastname: this.lastname,
-        firstname: this.firstname,
-        address: this.address,
-        city: this.city,
-        country: this.country,
-        code: this.code,
-        dob: this.dob,
-        product: this.product,
-        premium: this.premium,
-        notes: this.notes,
-        timestamp: serverTimestamp(),
-        // ... include other form data as needed ...
-      });
-
       // Add the form data to the Firestore collection
       this.addToFirestore();
 
@@ -195,7 +176,7 @@ export default {
         // ... include other form data as needed ...
       });
 
-      console.log("Form data added to Firestore");
+     
     },
 
     clearForm() {

@@ -96,11 +96,9 @@ confirmDeletion() {
   // Delete the user document
   deleteDoc(userDoc)
     .then(() => {
-      console.log("User deleted successfully!");
       // Optionally, you can update the local users array to reflect the deletion
     })
     .catch((error) => {
-      console.error("Error deleting user: ", error);
     });
 
   this.userIdToDelete = null; // Reset the userIdToDelete
@@ -134,7 +132,7 @@ confirmDeletion() {
           this.users = users;
         },
         (error) => {
-          console.error("Error getting data: ", error);
+          
         }
       );
 
