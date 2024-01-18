@@ -4,7 +4,7 @@
       <div
         class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-33"
       >
-        <chart-card
+        <yearly-premium-chart
           :chart-data="dailySalesChart.data"
           :chart-options="dailySalesChart.options"
           :chart-type="'Line'"
@@ -26,7 +26,7 @@
               updated 4 minutes ago
             </div>
           </template>
-        </chart-card>
+        </yearly-premium-chart>
       </div>
       <div
         class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-33"
@@ -96,33 +96,12 @@
       <div
         class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-25"
       >
-        <stats-card data-background-color="red">
+        <total-premium data-background-color="blue">
           <template slot="header">
-            <md-icon>info_outline</md-icon>
+            <md-icon>money</md-icon>
           </template>
 
-          <template slot="content">
-            <p class="category">Failed SMS</p>
-            <h3 class="title">2</h3>
-          </template>
-
-          <template slot="footer">
-            <div class="stats">Tracked from Twilio</div>
-          </template>
-        </stats-card>
-      </div>
-      <div
-        class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-25"
-      >
-        <stats-card data-background-color="blue">
-          <template slot="header">
-            <md-icon>thumb_up</md-icon>
-          </template>
-
-          <template slot="content">
-            <p class="category">Tasks To Complete</p>
-            <h3 class="title">2</h3>
-          </template>
+          
 
           <template slot="footer">
             <div class="stats">
@@ -130,7 +109,43 @@
               Just Updated
             </div>
           </template>
-        </stats-card>
+        </total-premium>
+      </div>
+      <div
+        class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-25"
+      >
+        <total-premium-last-week-card data-background-color="blue">
+          <template slot="header">
+            <md-icon>money</md-icon>
+          </template>
+
+          
+
+          <template slot="footer">
+            <div class="stats">
+              <md-icon>update</md-icon>
+              Just Updated
+            </div>
+          </template>
+        </total-premium-last-week-card>
+      </div>
+      <div
+        class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-25"
+      >
+        <total-premium-last-week-card data-background-color="blue">
+          <template slot="header">
+            <md-icon>money</md-icon>
+          </template>
+
+          
+
+          <template slot="footer">
+            <div class="stats">
+              <md-icon>update</md-icon>
+              Just Updated
+            </div>
+          </template>
+        </total-premium-last-week-card>
       </div>
       <div
         class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-50"
@@ -145,6 +160,7 @@
           </md-card-content>
         </md-card>
       </div>
+      
       <div
         class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-50"
       >
@@ -175,11 +191,17 @@
           </template>
         </nav-tabs-card>
       </div>
+      <div>
+        
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import TotalPremium from "@/components/Cards/TotalPremium.vue";
+import YearlyPremiumChart from "@/components/Cards/YearlyPremiumChart.vue";
+import TotalPremiumLastWeekCard from "@/components/Cards/TotalPremiumLastWeekCard.vue";  
 import {
   StatsCard,
   ChartCard,
@@ -195,6 +217,9 @@ export default {
     NavTabsCard,
     NavTabsTable,
     OrderedTable,
+    TotalPremium,
+    TotalPremiumLastWeekCard,
+    YearlyPremiumChart,
   },
   data() {
     return {

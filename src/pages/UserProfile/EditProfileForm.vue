@@ -151,26 +151,31 @@ export default {
       // Optionally, you can clear the form after submission
       this.clearForm();
 
-      // You can add additional logic here, such as sending data to the server
+      
+    
     },
+
 
     
     async addToFirestore() {
   // Example: Add form data to the "Users" collection
+    const numericPremium = parseFloat(this.premium);
+    const numericCode = parseInt(this.code);
+    const numericPhonenumber = parseFloat(this.phonenumber);
   const usersCollection = collection(db, "Users");
   await addDoc(usersCollection, {
     title: this.title,
-    phonenumber: this.phonenumber,
+    phonenumber: numericPhonenumber,
     emailadress: this.emailadress,
     lastname: this.lastname,
     firstname: this.firstname,
     address: this.address,
     city: this.city,
     country: this.country,
-    code: this.code,
+    code: numericCode,
     dob: this.dob,
     product: this.product,
-    premium: this.premium,
+    premium: numericPremium,
     notes: this.notes,
     timestamp: serverTimestamp(),
         // ... include other form data as needed ...
