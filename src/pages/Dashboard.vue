@@ -31,47 +31,56 @@
       <div
         class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-33"
       >
-        <chart-card
-          :chart-data="emailsSubscriptionChart.data"
-          :chart-options="emailsSubscriptionChart.options"
-          :chart-responsive-options="emailsSubscriptionChart.responsiveOptions"
-          :chart-type="'Bar'"
-          data-background-color="red"
+        <yearly-premium-chart
+          :chart-data="dailySalesChart.data"
+          :chart-options="dailySalesChart.options"
+          :chart-type="'Line'"
+          data-background-color="blue"
         >
           <template slot="content">
-            <h4 class="title">Email's Sent</h4>
-            <p class="category">Monthly volume</p>
+            <h4 class="title">Daily SMS Sent</h4>
+            <p class="category">
+              <span class="text-success"
+                ><i class="fas fa-long-arrow-alt-up"></i> 25%
+              </span>
+              increase in today's clients.
+            </p>
           </template>
 
           <template slot="footer">
             <div class="stats">
               <md-icon>access_time</md-icon>
-              updated Jan 1st, 2024
+              updated 4 minutes ago
             </div>
           </template>
-        </chart-card>
+        </yearly-premium-chart>
       </div>
       <div
         class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-33"
       >
-        <chart-card
-          :chart-data="dataCompletedTasksChart.data"
-          :chart-options="dataCompletedTasksChart.options"
+        <yearly-premium-chart
+          :chart-data="dailySalesChart.data"
+          :chart-options="dailySalesChart.options"
           :chart-type="'Line'"
-          data-background-color="green"
+          data-background-color="blue"
         >
           <template slot="content">
-            <h4 class="title">Completed Tasks</h4>
-            <p class="category">Updated 1 hour ago</p>
+            <h4 class="title">Daily SMS Sent</h4>
+            <p class="category">
+              <span class="text-success"
+                ><i class="fas fa-long-arrow-alt-up"></i> 25%
+              </span>
+              increase in today's clients.
+            </p>
           </template>
 
           <template slot="footer">
             <div class="stats">
               <md-icon>access_time</md-icon>
-              campaign sent 26 minutes ago
+              updated 4 minutes ago
             </div>
           </template>
-        </chart-card>
+        </yearly-premium-chart>
       </div>
       <div
         class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-25"
@@ -204,7 +213,6 @@ import YearlyPremiumChart from "@/components/Cards/YearlyPremiumChart.vue";
 import TotalPremiumLastWeekCard from "@/components/Cards/TotalPremiumLastWeekCard.vue";  
 import {
   StatsCard,
-  ChartCard,
   NavTabsCard,
   NavTabsTable,
   OrderedTable,
@@ -213,7 +221,6 @@ import {
 export default {
   components: {
     StatsCard,
-    ChartCard,
     NavTabsCard,
     NavTabsTable,
     OrderedTable,

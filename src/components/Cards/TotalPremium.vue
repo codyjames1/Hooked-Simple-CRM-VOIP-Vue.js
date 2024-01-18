@@ -18,8 +18,8 @@
 </template>
 
 <script>
-import { getDocs, collection } from "./firebaseConfig"; // Import necessary Firebase functions
-import { db } from "./firebaseConfig"; // Import db object
+import { getDocs, collection } from "./firebaseConfig";
+import { db } from "./firebaseConfig";
 
 export default {
   name: "total-premium",
@@ -32,32 +32,37 @@ export default {
   data() {
     return {
       totalPremium: 0,
-      formattedTotalPremium: "$0", // Initialize formattedTotalPremium with "$0"
-      statsTitle: "Total Premium", // You can customize the title
+      formattedTotalPremium: "$0",
+      statsTitle: "Total Premium",
     };
   },
   methods: {
     async fetchTotalPremium() {
-      const usersCollection = collection(db, "Users"); // Replace "Users" with your collection name
+      const usersCollection = collection(db, "Users");
       const querySnapshot = await getDocs(usersCollection);
 
       // Calculate the sum of the "premium" field for every document
       const sumPremium = querySnapshot.docs.reduce((sum, doc) => {
-        const premium = parseFloat(doc.data().premium) || 0; // Parse premium as a number, default to 0 if not a number
+        const premium = parseFloat(doc.data().premium) || 0;
         return sum + premium;
       }, 0);
 
       // Update totalPremium and formattedTotalPremium
       this.totalPremium = sumPremium;
 
-      // Check if sumPremium is a number before using toFixed
+      // Check if sumPremium is a number before formatting
       if (typeof sumPremium === "number") {
-        this.formattedTotalPremium = `$${sumPremium.toFixed(2)}`;
+        // Use toLocaleString to format as currency with commas and decimals
+        this.formattedTotalPremium = sumPremium.toLocaleString("en-US", {
+          style: "currency",
+          currency: "USD",
+          minimumFractionDigits: 2,
+        });
       }
     },
   },
   mounted() {
-    this.fetchTotalPremium(); // Fetch total premium when the component is mounted
+    this.fetchTotalPremium();
   },
 };
 </script>
