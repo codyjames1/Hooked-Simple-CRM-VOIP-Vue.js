@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, doc, onSnapshot, query, orderBy, limit, getDocs, where } from 'firebase/firestore';
-import { getAuth } from 'firebase/auth';
+import { getAuth, setPersistence, browserSessionPersistence, signOut } from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCICIbqH7KsHULbs4eVhxenNXuT1mn7_LQ",
@@ -13,6 +13,15 @@ const firebaseConfig = {
 
 const firebaseApp = initializeApp(firebaseConfig);
 const db = getFirestore(firebaseApp);
-const auth = getAuth(firebaseApp); // Pass the firebaseApp instance to getAuth
+const auth = getAuth(firebaseApp);
 
-export { db, collection, doc, onSnapshot, query, orderBy, limit, getDocs, where, auth };
+setPersistence(auth, browserSessionPersistence)
+  .then(() => {
+    // Auth state changed
+  })
+  .catch((error) => {
+    // An error occurred
+    console.error("Error setting session persistence:", error);
+  });
+
+export { db, collection, doc, onSnapshot, query, orderBy, limit, getDocs, where, auth, signOut };

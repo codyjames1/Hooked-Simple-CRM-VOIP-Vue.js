@@ -1,5 +1,5 @@
 import Login from "@/pages/Login.vue";
-import { auth } from "/src/components/Cards/firebaseConfig.js";
+import { auth } from "@/components/Cards/firebaseConfig.js";
 import DashboardLayout from "@/pages/Layout/DashboardLayout.vue";
 import Dashboard from "@/pages/Dashboard.vue";
 import UserProfile from "@/pages/UserProfile.vue";
@@ -12,15 +12,25 @@ import UpgradeToPRO from "@/pages/UpgradeToPRO.vue";
 
 const routes = [
   {
-    path: '/',
-    name: '/login',
+    path: '/login',
+    name: 'login',
     component: Login,
   },
 
   {
     path: "/",
     component: DashboardLayout,
-    redirect: "/dashboard",
+    redirect: to => {
+      const isAuthenticated = auth.currentUser;
+
+      if (isAuthenticated) {
+        // If authenticated, redirect to the dashboard
+        return "/dashboard";
+      } else {
+        // If not authenticated, redirect to the login page
+        return "/login";
+      }
+    },
     children: [
       {
         path: "dashboard",
@@ -83,10 +93,6 @@ router.beforeEach((to, from, next) => {
 
   if (requiresAuth && !isAuthenticated) {
     next("/login");
-  } else if (to.path === "/login" && isAuthenticated) {
-    // If the user is already authenticated and tries to visit the login page,
-    // redirect them to the dashboard
-    next("/dashboard");
   } else {
     next();
   }

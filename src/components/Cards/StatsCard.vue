@@ -18,8 +18,8 @@
 </template>
 
 <script>
-import { getDocs, collection } from "./firebaseConfig"; // Import necessary Firebase functions
-import { db } from "./firebaseConfig"; // Import db object
+import { getDocs, collection } from 'firebase/firestore';
+import { db } from './firebaseConfig';
 
 export default {
   name: "stats-card",

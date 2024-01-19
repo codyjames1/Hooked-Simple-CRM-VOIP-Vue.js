@@ -18,8 +18,8 @@
 </template>
 
 <script>
-import { getDocs, collection } from "./firebaseConfig";
-import { db } from "./firebaseConfig";
+import { getDocs, collection } from 'firebase/firestore';
+import { db } from './firebaseConfig';
 
 export default {
   name: "total-premium",

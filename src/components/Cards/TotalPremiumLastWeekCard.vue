@@ -18,7 +18,7 @@
   </template>
   
   <script>
-import { getDocs, collection, query, where, orderBy } from "./firebaseConfig";
+import { getDocs, collection, query, where, orderBy } from "firebase/firestore";
 import { db } from "./firebaseConfig";
 
 export default {

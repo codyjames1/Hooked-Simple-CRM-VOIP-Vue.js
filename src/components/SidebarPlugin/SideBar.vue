@@ -34,16 +34,38 @@
           </sidebar-link>
         </slot>
       </md-list>
+      <md-button class="md-raised md-warn" @click="logoutUser">Logout</md-button>
     </div>
+    
   </div>
+  
 </template>
 <script>
 import SidebarLink from "./SidebarLink.vue";
+import { auth, signOut } from '@/components/Cards/firebaseConfig.js';
 
 export default {
   components: {
     SidebarLink,
   },
+
+  methods: {
+    // ... (existing methods) ...
+
+    logoutUser() {
+      // Perform logout actions
+      // For Firebase, you can use signOut function
+      signOut(auth)
+        .then(() => {
+          // Redirect to the logout page or login page if needed
+          this.$router.push('/login');
+        })
+        .catch((error) => {
+          console.error('Logout error:', error);
+        });
+    },
+  },
+
   props: {
     title: {
       type: String,

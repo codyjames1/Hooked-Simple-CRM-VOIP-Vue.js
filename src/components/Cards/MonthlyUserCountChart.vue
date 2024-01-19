@@ -7,8 +7,8 @@
   
   <script>
   import Chart from 'chart.js/auto';
-  import { getDocs, collection } from "./firebaseConfig";
-  import { db } from "./firebaseConfig";
+  import { getDocs, collection } from 'firebase/firestore';
+  import { db } from './firebaseConfig';
   
   export default {
     name: 'MonthlyUserCountChart',
