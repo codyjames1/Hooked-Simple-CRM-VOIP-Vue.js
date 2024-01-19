@@ -63,7 +63,7 @@ export default {
         // Handle successful login (e.g., navigate to the dashboard)
         this.$router.push('/dashboard');
       } catch (error) {
-        console.error('Login error:', error.message);
+        
         // Handle login error (e.g., display error message)
       } finally {
         this.loading = false;
