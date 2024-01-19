@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="submitForm">
+  <form ref="subform" @submit.prevent="submitForm">
     <md-card>
       <md-card-header :data-background-color="dataBackgroundColor">
         <h4 class="title">Hook Client</h4>
@@ -65,10 +65,11 @@
             </md-field>
           </div>
           <div class="md-layout-item md-small-size-100 md-size-33">
-            <md-datepicker v-model="dob" :key="dobKey" required>
-  <label>Select date</label>
-</md-datepicker>
-         </div>
+  <md-field>
+    <label class="dateob">Date of Birth</label>
+    <md-input v-model="dob" type="date"></md-input>
+  </md-field>
+</div>
           <div class="md-layout-item md-small-size-100 md-size-33">
             <md-field>
               <label>Product Sold</label>
@@ -98,115 +99,106 @@
   </form>
 </template>
 <script>
-// Adjust the import path based on the location of your firebaseConfig.js file
 import { serverTimestamp } from "firebase/firestore";
-import { db, collection, addDoc,  } from "./firebaseConfig";
+import { db, collection, addDoc } from "./firebaseConfig";
+import moment from "moment";
 
 export default {
   data() {
-  return {
-    // ... other properties
-    dobKey: 0, // key for md-datepicker
-  };
-},
-
-  watch: {
-  dob(newDob) {
-    this.formatDOB(newDob);
+    return {
+      
+    };
   },
-},
   methods: {
-    formatDOB(newDob) {
+
+    data: {
+      dob: moment().format("MM/DD/YYYY"),
+
+    },
+
+    formatDOB(dob) {
     // Ensure the input value is not empty
-    if (newDob) {
-      // Remove non-numeric characters
-      const numericValue = newDob.replace(/\D/g, '');
+    if (dob) {
+      // Split the input into parts based on "/"
+      const parts = dob.split('/');
 
-      // Check if the value is a valid date (8 digits)
-      if (/^\d{0,8}$/.test(numericValue)) {
-        // Format the date as MM/DD/YYYY
-        const formattedDate = numericValue.replace(
-          /^(\d{0,2})(\d{0,2})(\d{0,4})$/,
-          (match, p1, p2, p3) => {
-            let result = '';
+      // Ensure there are three parts (MM, DD, YYYY)
+      if (parts.length === 3) {
+        const [month, day, year] = parts;
 
-            if (p1) result += p1.padStart(2, '0');
-            if (p2) result += `/${p2.padStart(2, '0')}`;
-            if (p3) result += `/${p3.padStart(4, '0')}`;
-
-            return result;
-          }
-        );
-
-        // Update the v-model with the formatted date
-        this.dob = formattedDate;
+        // Ensure each part is a valid number
+        if (!isNaN(month) && !isNaN(day) && !isNaN(year)) {
+          // Format the date as MM/DD/YYYY
+          return `${month.padStart(2, '0')}/${day.padStart(2, '0')}/${year.padStart(4, '0')}`;
+        }
       }
     }
-  },
-    
-    submitForm() {
-      // Add the form data to the Firestore collection
-      this.addToFirestore();
 
-      // Optionally, you can clear the form after submission
-      this.clearForm();
+    // Return the original input if the format is not valid
+    return dob;
+  },
+    async submitForm() {
+      
+      await this.addToFirestore();
 
       
-    
+      this.clearForm();
     },
-
-
-    
     async addToFirestore() {
-  // Example: Add form data to the "Users" collection
-    const numericPremium = parseFloat(this.premium);
-    const numericCode = parseInt(this.code);
-    const numericPhonenumber = parseFloat(this.phonenumber);
-  const usersCollection = collection(db, "Users");
-  await addDoc(usersCollection, {
-    title: this.title,
-    phonenumber: numericPhonenumber,
-    emailadress: this.emailadress,
-    lastname: this.lastname,
-    firstname: this.firstname,
-    address: this.address,
-    city: this.city,
-    country: this.country,
-    code: numericCode,
-    dob: this.dob,
-    product: this.product,
-    premium: numericPremium,
-    notes: this.notes,
-    timestamp: serverTimestamp(),
-        // ... include other form data as needed ...
-      });
-
      
+      const numericPremium = parseFloat(this.premium);
+      const numericCode = parseInt(this.code);
+      const numericPhonenumber = parseFloat(this.phonenumber);
+
+      const usersCollection = collection(db, "Users");
+      await addDoc(usersCollection, {
+        title: this.title,
+        phonenumber: numericPhonenumber,
+        emailadress: this.emailadress,
+        lastname: this.lastname,
+        firstname: this.firstname,
+        address: this.address,
+        city: this.city,
+        country: this.country,
+        code: numericCode,
+        dob: this.dob, 
+        product: this.product,
+        premium: numericPremium,
+        notes: this.notes,
+        timestamp: serverTimestamp(),
+      }).then(() => {
+        
+        this.$refs.subform.reset(); // Reset the form
+
+      });
     },
-
     clearForm() {
-  // Increment the key to force a re-render of the form components
-  this.dobKey += 1;
-
-  // Reset other form data
-  this.title = '';
-  this.phonenumber = '';
-  this.emailadress = '';
-  this.lastname = '';
-  this.firstname = '';
-  this.address = '';
-  this.city = '';
-  this.country = '';
-  this.code = '';
-  this.dob = '';
-  this.product = '';
-  this.premium = '';
-  this.notes = '';
-},
-
+      // Clear the form by resetting all the values
+      this.title = "";
+      this.phonenumber = "";
+      this.emailadress = "";
+      this.lastname = "";
+      this.firstname = "";
+      this.address = "";
+      this.city = "";
+      this.country = "";
+      this.code = "";
+      this.dob = "";
+      this.product = "";
+      this.premium = "";
+      this.notes = "";
+    },
   },
 };
+
 </script>
 
 
-<style></style>
+<style>
+.dateob {
+  /*keep label above input*/
+  margin-top: -1.5em;
+  margin-bottom: 1em;
+  
+}
+</style>

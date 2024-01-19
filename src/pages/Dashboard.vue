@@ -31,7 +31,7 @@
       <div
         class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-33"
       >
-        <yearly-premium-chart
+        <monthly-user-count-chart
           :chart-data="dailySalesChart.data"
           :chart-options="dailySalesChart.options"
           :chart-type="'Line'"
@@ -53,7 +53,7 @@
               updated 4 minutes ago
             </div>
           </template>
-        </yearly-premium-chart>
+        </monthly-user-count-chart>
       </div>
       <div
         class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-33"
@@ -97,7 +97,8 @@
 
           <template slot="footer">
             <div class="stats">
-              <a href="#pablo">Manage my plan...</a>
+              <md-icon>update</md-icon>
+              Updated
             </div>
           </template>
         </stats-card>
@@ -115,7 +116,7 @@
           <template slot="footer">
             <div class="stats">
               <md-icon>update</md-icon>
-              Just Updated
+              Updated
             </div>
           </template>
         </total-premium>
@@ -133,7 +134,7 @@
           <template slot="footer">
             <div class="stats">
               <md-icon>update</md-icon>
-              Just Updated
+              Updated
             </div>
           </template>
         </total-premium-last-week-card>
@@ -151,7 +152,7 @@
           <template slot="footer">
             <div class="stats">
               <md-icon>update</md-icon>
-              Just Updated
+              Updated
             </div>
           </template>
         </total-premium-last-week-card>
@@ -211,6 +212,7 @@
 import TotalPremium from "@/components/Cards/TotalPremium.vue";
 import YearlyPremiumChart from "@/components/Cards/YearlyPremiumChart.vue";
 import TotalPremiumLastWeekCard from "@/components/Cards/TotalPremiumLastWeekCard.vue";  
+import MonthlyUserCountChart from "../components/Cards/MonthlyUserCountChart.vue";
 import {
   StatsCard,
   NavTabsCard,
@@ -227,6 +229,7 @@ export default {
     TotalPremium,
     TotalPremiumLastWeekCard,
     YearlyPremiumChart,
+    MonthlyUserCountChart,
   },
   data() {
     return {

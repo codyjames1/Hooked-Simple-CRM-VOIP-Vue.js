@@ -88,26 +88,35 @@
 </template>
 
 <script>
+import { db, collection, onSnapshot } from "./firebaseConfig";
 export default {
   data() {
     return {
       selectedEmployee: null,
-      employees: [
-        "Jim Halpert",
-        "Dwight Schrute",
-        "Michael Scott",
-        "Pam Beesly",
-        "Angela Martin",
-        "Kelly Kapoor",
-        "Ryan Howard",
-        "Kevin Malone",
-      ],
+      employees: [],
     };
   },
   methods: {
     toggleSidebar() {
       this.$sidebar.displaySidebar(!this.$sidebar.showSidebar);
     },
+  },
+  mounted() {
+    // Fetch data from Firestore on component mount
+    const usersCollection = collection(db, "Users");
+
+    // Listen for real-time updates on the Users collection
+    onSnapshot(usersCollection, (querySnapshot) => {
+      const employees = [];
+      querySnapshot.forEach((doc) => {
+        const { firstname, lastname } = doc.data();
+        const fullName = `${firstname} ${lastname}`;
+        employees.push(fullName);
+      });
+
+      // Set the employees data in the component
+      this.employees = employees;
+    });
   },
 };
 </script>

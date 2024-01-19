@@ -12,8 +12,6 @@
         <option value="timestamp">Date Added</option>
         <option value="name">Name</option>
         <option value="premium">Premium</option>
-        <option value="dob">DOB</option>
-        <option value="city">City</option>
         <!-- Add other filter options based on your data fields -->
       </select>
     </div>
@@ -26,7 +24,7 @@
         <md-table-cell md-label="Phone Number">{{ item.phonenumber }}</md-table-cell>
         <md-table-cell md-label="Product Sold">{{ item.product }}</md-table-cell>
         <md-table-cell md-label="Premium">{{ item.premium }}</md-table-cell>
-        <md-table-cell md-label="DOB">{{ formatDOB(item.dob) }}</md-table-cell>
+        <md-table-cell md-label="DOB">{{ item.dob }}</md-table-cell>
         <md-table-cell md-label="Date Added">{{ formatTimestamp(item.timestamp, 'datetime') }}</md-table-cell>
         <md-table-cell>
           <md-button @click="deleteUser(item.id)" class="md-icon-button md-accent" id="trashbtn">
@@ -43,6 +41,7 @@
 // Import necessary functions from Firebase
 import { db, collection, onSnapshot, query, orderBy, limit, doc, deleteDoc } from "./firebaseConfig";
 import ConfirmationModal from "./ConfirmationModal"; // Adjust the import path
+
 
 export default {
   name: "ordered-table",
@@ -64,13 +63,7 @@ export default {
     };
   },
   methods: {
-    formatDOB(dob) {
-      // Parse the string into a JavaScript Date object
-      const date = new Date(dob);
-
-      // Format as a string in the desired date format
-      return date.toLocaleDateString();
-    },
+    
     formatTimestamp(timestamp, format) {
       // Check if timestamp is a valid object with seconds property
       if (timestamp && timestamp.seconds !== undefined) {
@@ -86,24 +79,24 @@ export default {
       return ''; // Default to an empty string if timestamp is null, undefined, or in an unexpected format
     },
     deleteUser(userId) {
-  this.userIdToDelete = userId;
-  this.showConfirmation = true;
-},
-confirmDeletion() {
-  const usersCollection = collection(db, "Users");
-  const userDoc = doc(usersCollection, this.userIdToDelete);
+      this.userIdToDelete = userId;
+      this.showConfirmation = true;
+    },
+    confirmDeletion() {
+      const usersCollection = collection(db, "Users");
+      const userDoc = doc(usersCollection, this.userIdToDelete);
 
-  // Delete the user document
-  deleteDoc(userDoc)
-    .then(() => {
-      // Optionally, you can update the local users array to reflect the deletion
-    })
-    .catch((error) => {
-    });
+      // Delete the user document
+      deleteDoc(userDoc)
+        .then(() => {
+          
+        })
+        .catch((error) => {
+        });
 
-  this.userIdToDelete = null; // Reset the userIdToDelete
-  this.showConfirmation = false;
-},
+      this.userIdToDelete = null; // Reset the userIdToDelete
+      this.showConfirmation = false;
+    },
     cancelDeletion() {
       this.userIdToDelete = null;
       this.showConfirmation = false;
@@ -128,7 +121,7 @@ confirmDeletion() {
             });
           });
 
-          // Set the users data in your component
+          // Set the users data in component
           this.users = users;
         },
         (error) => {

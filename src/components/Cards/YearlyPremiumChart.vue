@@ -73,6 +73,7 @@ export default {
             y: {
               beginAtZero: true,
               ticks: {
+                color: 'white',
                 callback: function (value) {
                   return '$' + value.toFixed(2);
                 }

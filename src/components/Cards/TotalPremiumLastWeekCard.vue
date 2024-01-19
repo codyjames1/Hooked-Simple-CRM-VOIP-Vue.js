@@ -81,9 +81,9 @@ export default {
 
   <style>
     .value {
-        font-size: 18px; 
+        font-size: 19px; 
         font-weight: 500;
-        color: green;
+        color: rgb(42, 182, 42);
     }
 
 </style>

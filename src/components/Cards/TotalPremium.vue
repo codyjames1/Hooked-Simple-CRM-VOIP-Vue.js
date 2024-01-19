@@ -34,6 +34,7 @@ export default {
       totalPremium: 0,
       formattedTotalPremium: "$0",
       statsTitle: "Total Premium",
+      
     };
   },
   methods: {
@@ -66,3 +67,17 @@ export default {
   },
 };
 </script>
+
+<style>
+.md-card-stats {
+  background-color: #2c2c2c !Important;
+}
+
+/*stats title color to white*/
+.md-card-stats .stats .title {
+  color: #fff !Important;
+}
+
+
+
+</style>
