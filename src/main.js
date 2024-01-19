@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import App from "./App";
+import { auth } from "./components/Cards/firebaseConfig"; // Update the import path
 
 // router setup
 import routes from "./routes/routes";
@@ -17,9 +18,11 @@ import Chartist from "chartist";
 
 // configure router
 const router = new VueRouter({
-  routes, // short for routes: routes
+  routes,
   linkExactActiveClass: "nav-item active",
 });
+
+
 
 Vue.prototype.$Chartist = Chartist;
 
@@ -34,6 +37,9 @@ new Vue({
   el: "#app",
   render: (h) => h(App),
   router,
+  provide: {
+    $fireAuth: auth,
+  },
   data: {
     Chartist: Chartist,
   },

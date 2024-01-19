@@ -323,3 +323,16 @@ export default {
   },
 };
 </script>
+<style>
+/*create small amount of space between yearly premium chart and monthly-user-count-chart on mobile devices */
+@media (max-width: 768px) {
+  yearly-premium-chart {
+    margin-bottom: 50px !important;
+  }
+}
+
+
+
+
+
+</style>
