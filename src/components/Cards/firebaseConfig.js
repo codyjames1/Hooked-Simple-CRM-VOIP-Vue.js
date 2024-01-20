@@ -21,7 +21,7 @@ setPersistence(auth, browserSessionPersistence)
   })
   .catch((error) => {
     // An error occurred
-    console.error("Error setting session persistence:", error);
+    
   });
 
 export { db, collection, doc, onSnapshot, query, orderBy, limit, getDocs, where, auth, signOut };
