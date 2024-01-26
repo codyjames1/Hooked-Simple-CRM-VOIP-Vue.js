@@ -19,10 +19,6 @@
         <md-icon>content_paste</md-icon>
         <p>All Clients</p>
       </sidebar-link>
-      <sidebar-link to="/notifications">
-        <md-icon>notifications</md-icon>
-        <p>Notifications</p>
-      </sidebar-link>
     </side-bar>
 
     <div class="main-panel">
