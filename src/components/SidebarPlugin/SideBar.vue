@@ -53,12 +53,13 @@ export default {
     // ... (existing methods) ...
 
     logoutUser() {
-      // Perform logout actions
-      // For Firebase, you can use signOut function
+      
       signOut(auth)
         .then(() => {
           // Redirect to the logout page or login page if needed
-          this.$router.push('/login');
+          this.$router.push('login');
+
+
         })
         .catch((error) => {
           

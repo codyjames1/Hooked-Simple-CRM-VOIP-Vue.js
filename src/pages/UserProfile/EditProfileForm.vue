@@ -78,7 +78,7 @@
           </div>
           <div class="md-layout-item md-small-size-100 md-size-33">
             <md-field>
-              <label>Monthly Premium</label>
+              <label>Annual Premium</label>
               <md-input v-model="premium" type="number" required></md-input>
             </md-field>
           </div>

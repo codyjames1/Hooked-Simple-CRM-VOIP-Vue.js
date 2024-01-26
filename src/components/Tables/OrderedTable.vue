@@ -1,10 +1,11 @@
 <template>
   <div>
     <confirmation-modal
-  :show="showConfirmation"
-  :on-confirm="confirmDeletion"
-  :on-cancel="cancelDeletion"
-></confirmation-modal>
+      :show="showConfirmation"
+      :on-confirm="confirmDeletion"
+      :on-cancel="cancelDeletion"
+    ></confirmation-modal>
+
     <!-- Filter options -->
     <div>
       <label>Filter by:</label>
@@ -23,25 +24,56 @@
         <md-table-cell md-label="Last Name">{{ item.lastname }}</md-table-cell>
         <md-table-cell md-label="Phone Number">{{ item.phonenumber }}</md-table-cell>
         <md-table-cell md-label="Product Sold">{{ item.product }}</md-table-cell>
-        <md-table-cell md-label="Premium">{{ item.premium }}</md-table-cell>
+        <md-table-cell md-label="Annual Premium">{{ item.premium }}</md-table-cell>
         <md-table-cell md-label="DOB">{{ item.dob }}</md-table-cell>
         <md-table-cell md-label="Date Added">{{ formatTimestamp(item.timestamp, 'datetime') }}</md-table-cell>
         <md-table-cell>
+          <md-button @click="openEditDialog(item)" class="md-icon-button md-accent" id="editbtn">
+            <md-icon class="edit">edit</md-icon>
+          </md-button>
           <md-button @click="deleteUser(item.id)" class="md-icon-button md-accent" id="trashbtn">
             <md-icon class="trash">delete</md-icon>
           </md-button>
         </md-table-cell>
       </md-table-row>
     </md-table>
-    
+
+    <!-- Edit Dialog -->
+    <md-dialog v-model="editDialog" :md-fullscreen="false" @md-closed="closeEditDialog">
+  <md-dialog-title>Edit User</md-dialog-title>
+  <md-dialog-content>
+    <md-field>
+      <label>First Name</label>
+      <md-input v-model="editedUser.firstname"></md-input>
+    </md-field>
+    <md-field>
+      <label>Last Name</label>
+      <md-input v-model="editedUser.lastname"></md-input>
+    </md-field>
+    <!-- Add other fields as needed -->
+  </md-dialog-content>
+  <md-dialog-actions>
+    <md-button class="md-primary" @click="saveEditedUser">Save Changes</md-button>
+    <md-button @click="closeEditDialog">Cancel</md-button>
+  </md-dialog-actions>
+</md-dialog>
   </div>
 </template>
 
 <script>
 // Import necessary functions from Firebase
-import { db, collection, onSnapshot, query, orderBy, limit, doc, deleteDoc } from "./firebaseConfig";
+import { 
+  db, 
+  collection, 
+  onSnapshot, 
+  query, 
+  orderBy, 
+  limit, 
+  doc, 
+  deleteDoc, 
+  updateDoc 
+} from "./firebaseConfig";
 import ConfirmationModal from "./ConfirmationModal"; // Adjust the import path
-
 
 export default {
   name: "ordered-table",
@@ -60,23 +92,26 @@ export default {
       filterOption: "timestamp", // Default filter option
       showConfirmation: false,
       userIdToDelete: null,
+      editDialog: false,
+      editedUser: {
+        id: null,
+        firstname: "",
+        lastname: "",
+        // Add other fields as needed
+      },
     };
   },
   methods: {
-    
     formatTimestamp(timestamp, format) {
-      // Check if timestamp is a valid object with seconds property
       if (timestamp && timestamp.seconds !== undefined) {
-        // Convert timestamp to a JavaScript Date object
         const date = new Date(timestamp.seconds * 1000 + (timestamp.nanoseconds || 0) / 1e6);
 
         if (format === 'datetime') {
-          // Format as date and time
           return date.toLocaleString();
         }
       }
 
-      return ''; // Default to an empty string if timestamp is null, undefined, or in an unexpected format
+      return '';
     },
     deleteUser(userId) {
       this.userIdToDelete = userId;
@@ -86,15 +121,11 @@ export default {
       const usersCollection = collection(db, "Users");
       const userDoc = doc(usersCollection, this.userIdToDelete);
 
-      // Delete the user document
       deleteDoc(userDoc)
-        .then(() => {
-          
-        })
-        .catch((error) => {
-        });
+        .then(() => {})
+        .catch((error) => {});
 
-      this.userIdToDelete = null; // Reset the userIdToDelete
+      this.userIdToDelete = null;
       this.showConfirmation = false;
     },
     cancelDeletion() {
@@ -102,14 +133,10 @@ export default {
       this.showConfirmation = false;
     },
     updateQuery() {
-      // Reference to the "Users" collection
       const usersCollection = collection(db, "Users");
-
-      // Update the query based on the selected filter option
       let orderByField = this.filterOption === 'timestamp' ? 'timestamp' : this.filterOption;
-      const queryLatestDocuments = query(usersCollection, orderBy(orderByField, "desc"), limit(5) );
+      const queryLatestDocuments = query(usersCollection, orderBy(orderByField, "desc"), limit(5));
 
-      // Listen for real-time updates on the updated query
       const unsubscribe = onSnapshot(
         queryLatestDocuments,
         (querySnapshot) => {
@@ -121,20 +148,43 @@ export default {
             });
           });
 
-          // Set the users data in component
           this.users = users;
         },
-        (error) => {
-          
-        }
+        (error) => {}
       );
 
-      // Save the unsubscribe function to stop listening when the component is destroyed
       this.$once("hook:beforeDestroy", unsubscribe);
+    },
+    openEditDialog(user) {
+      this.editDialog = true;
+      this.editedUser = { ...user };
+    },
+    closeEditDialog() {
+      this.editDialog = false;
+      this.editedUser = {
+        id: null,
+        firstname: "",
+        lastname: "",
+        // Reset other fields as needed
+      };
+    },
+    saveEditedUser() {
+      if (!this.editedUser.id) {
+        return;
+      }
+
+      const usersCollection = collection(db, "Users");
+      const userDoc = doc(usersCollection, this.editedUser.id);
+
+      updateDoc(userDoc, this.editedUser)
+        .then(() => {
+          this.closeEditDialog();
+        })
+        .catch((error) => {
+        });
     },
   },
   mounted() {
-    // Initial query based on the default filter option
     this.updateQuery();
   },
 };

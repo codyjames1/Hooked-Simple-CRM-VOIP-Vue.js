@@ -87,7 +87,7 @@
       >
         <stats-card data-background-color="orange">
           <template slot="header">
-            <md-icon>content_copy</md-icon>
+            <md-icon>groups</md-icon>
           </template>
 
           <template slot="content">
@@ -108,7 +108,7 @@
       >
         <total-premium data-background-color="blue">
           <template slot="header">
-            <md-icon>money</md-icon>
+            <md-icon>paid</md-icon>
           </template>
 
           
@@ -126,7 +126,7 @@
       >
         <total-premium-last-week-card data-background-color="blue">
           <template slot="header">
-            <md-icon>money</md-icon>
+            <md-icon>date_range</md-icon>
           </template>
 
           
@@ -142,9 +142,9 @@
       <div
         class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-25"
       >
-        <total-premium-last-week-card data-background-color="blue">
+        <total-premium-last30 data-background-color="blue">
           <template slot="header">
-            <md-icon>money</md-icon>
+            <md-icon>trending_up</md-icon>
           </template>
 
           
@@ -155,10 +155,10 @@
               Updated
             </div>
           </template>
-        </total-premium-last-week-card>
+        </total-premium-last30>
       </div>
       <div
-        class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-50"
+        class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-100"
       >
         <md-card>
           <md-card-header data-background-color="orange">
@@ -174,32 +174,7 @@
       <div
         class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-50"
       >
-        <nav-tabs-card>
-          <template slot="content">
-            <span class="md-nav-tabs-title">Tasks:</span>
-            <md-tabs class="md-success" md-alignment="left">
-              <md-tab id="tab-home" md-label="Today" md-icon="thumb_up">
-                <nav-tabs-table></nav-tabs-table>
-              </md-tab>
-
-              <md-tab
-                id="tab-pages"
-                md-label="Completed"
-                md-icon="done_outline"
-              >
-                <nav-tabs-table></nav-tabs-table>
-              </md-tab>
-
-              <md-tab
-                id="tab-posts"
-                md-label="Create Task"
-                md-icon="person_add"
-              >
-                <create-task-table></create-task-table>
-              </md-tab>
-            </md-tabs>
-          </template>
-        </nav-tabs-card>
+        
       </div>
       <div>
         
@@ -219,18 +194,18 @@ import {
   NavTabsTable,
   OrderedTable,
 } from "@/components";
+import TotalPremiumLast30 from "../components/Cards/TotalPremiumLast30.vue";
 
 export default {
   components: {
     StatsCard,
-    NavTabsCard,
-    NavTabsTable,
     OrderedTable,
     TotalPremium,
     TotalPremiumLastWeekCard,
     YearlyPremiumChart,
     MonthlyUserCountChart,
-  },
+    TotalPremiumLast30
+},
   data() {
     return {
       dailySalesChart: {

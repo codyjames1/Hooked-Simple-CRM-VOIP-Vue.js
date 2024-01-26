@@ -14,7 +14,7 @@
         <md-table-cell md-label="Last Name">{{ item.lastname }}</md-table-cell>
         <md-table-cell md-label="Phone Number">{{ item.phonenumber }}</md-table-cell>
         <md-table-cell md-label="Product Sold">{{ item.product }}</md-table-cell>
-        <md-table-cell md-label="Premium">{{ item.premium }}</md-table-cell>
+        <md-table-cell md-label="Annual Premium">{{ item.premium }}</md-table-cell>
         <md-table-cell md-label="DOB">{{ formatDOB(item.dob) }}</md-table-cell>
         <md-table-cell md-label="Date Added">{{ formatTimestamp(item.timestamp, 'datetime') }}</md-table-cell>
         <md-table-cell>
